@@ -13,13 +13,13 @@ export async function authenticateToken(
   res: Response,
   next: NextFunction
 ) {
-  // Authentication
+  
   const authHeader = req.headers['authorization'];
   const jwtToken = authHeader?.split(' ')[1];
   if (!jwtToken) {
     return res.sendStatus(401);
   }
-  // decode the jwt token
+
   try {
     const payload = (await jwt.verify(jwtToken, JWT_SECRET)) as {
       tokenId: number;

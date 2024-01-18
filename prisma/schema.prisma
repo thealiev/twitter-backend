@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -42,10 +39,10 @@ model Token {
   user User @relation(fields: [userId], references: [id])
 }
 
-// enum TokenType {
-//   EMAIL
-//   API
-// }
+enum TokenType {
+  EMAIL
+   API
+ }
 
 model Tweet {
   id Int @id @default(autoincrement())

@@ -4,17 +4,12 @@ import { PrismaClient } from '@prisma/client';
 const router = Router();
 const prisma = new PrismaClient();
 
-// User CRUD
 
-/*
-  Test with curl:
 
-  curl -X POST -H "Content-Type: application/json" \
-       -d '{"name": "Elon Musk", "email": "doge@twitter.com", "username": "elon"}' \
-       http://localhost:3000/user/
+  // curl -X POST -H "Content-Type: application/json" \
+  //      -d '{"name": "Elon Musk", "email": "doge@twitter.com", "username": "elon"}' \
+  //      http://localhost:3000/user/
 
-*/
-// Create user
 router.post('/', async (req, res) => {
   const { email, name, username } = req.body;
 
@@ -34,21 +29,18 @@ router.post('/', async (req, res) => {
   }
 });
 
-// list users
 router.get('/', async (req, res) => {
   const allUser = await prisma.user.findMany({
-    // select: {
-    //   id: true,
-    //   name: true,
-    //   image: true,
-    //   bio: true,
-    // },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      bio: true,
+    },
   });
 
   res.json(allUser);
 });
-
-// get one user
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const user = await prisma.user.findUnique({
@@ -60,14 +52,14 @@ router.get('/:id', async (req, res) => {
 });
 
 /*
-  Test with curl:
+
 
   curl -X PUT -H "Content-Type: application/json" \
        -d '{"name": "Vadim", "bio": "Hello there!"}' \
        http://localhost:3000/user/1
 
 */
-// update user
+
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { bio, name, image } = req.body;
@@ -83,8 +75,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// curl -X DELETE http://localhost:3000/user/6
-// delete user
+
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   await prisma.user.delete({ where: { id: Number(id) } });

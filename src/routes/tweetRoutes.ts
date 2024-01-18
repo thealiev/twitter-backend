@@ -4,12 +4,9 @@ import { PrismaClient } from '@prisma/client';
 const router = Router();
 const prisma = new PrismaClient();
 
-// Tweet CRUD
 
-// Create Tweet
 router.post('/', async (req, res) => {
   const { content, image } = req.body;
-  // @ts-ignore
   const user = req.user;
 
   try {
@@ -28,7 +25,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// list Tweet
 router.get('/', async (req, res) => {
   const allTweets = await prisma.tweet.findMany({
     include: {
@@ -45,7 +41,6 @@ router.get('/', async (req, res) => {
   res.json(allTweets);
 });
 
-// get one Tweet
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   console.log('Query tweet with id: ', id);
@@ -61,13 +56,11 @@ router.get('/:id', async (req, res) => {
   res.json(tweet);
 });
 
-// update Tweet
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   res.status(501).json({ error: `Not Implemented: ${id}` });
 });
 
-// delete Tweet
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   await prisma.tweet.delete({ where: { id: Number(id) } });

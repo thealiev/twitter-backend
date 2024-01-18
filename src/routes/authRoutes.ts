@@ -10,7 +10,6 @@ const JWT_SECRET = process.env.JWT_SECRET || 'SUPER SECRET';
 const router = Router();
 const prisma = new PrismaClient();
 
-// Generate a random 8 digit number as the email token
 function generateEmailToken(): string {
   return Math.floor(10000000 + Math.random() * 90000000).toString();
 }
@@ -24,12 +23,8 @@ function generateAuthToken(tokenId: number): string {
   });
 }
 
-// Create a user, if it doesn't exist,
-// generate the emailToken and send it to their email
 router.post('/login', async (req, res) => {
   const { email } = req.body;
-
-  // generate token
   const emailToken = generateEmailToken();
   const expiration = new Date(
     new Date().getTime() + EMAIL_TOKEN_EXPIRATION_MINUTES * 60 * 1000
